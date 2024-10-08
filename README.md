@@ -39,6 +39,7 @@ Clone the repository: git clone https://github.com/codex-academy/vps-deployment-
 **PM2 Ecosystem File** 
 Create a file named ecosystem.config.js with the following content:
 JavaScript
+```
 module.exports = {
 
   apps: [
@@ -74,10 +75,11 @@ module.exports = {
   ],
   
 };
+```
 
 **Nginx Configuration**
 - Create a file named nginx.conf with the following content:
-
+```
 server {
 
     listen 80;
@@ -127,7 +129,7 @@ server {
         
     }
 }
-
+```
 ### Troubleshooting
 - Check PM2 logs: pm2 logs
 - Check Nginx logs: sudo nginx -t
