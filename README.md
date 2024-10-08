@@ -35,36 +35,56 @@ Clone the repository: git clone https://github.com/codex-academy/vps-deployment-
 - Restart Nginx: sudo systemctl restart nginx
 
 ### Configuration
-PM2 Ecosystem File
+
+**PM2 Ecosystem File** 
 Create a file named ecosystem.config.js with the following content:
 JavaScript
 module.exports = {
+
   apps: [
+  
     {
       name: 'app1',
+      
       script: 'dist/index.js',
+      
       env: {
+      
         PORT: 8081,
+        
       },
+      
     },
+    
     {
       name: 'app2',
+      
       script: 'dist/index.js',
+      
       env: {
+      
         PORT: 8082,
+        
         BACKGROUND_COLOR: '#ccc',
+        
       },
+      
     },
+    
   ],
+  
 };
-Nginx Configuration
-Create a file named nginx.conf with the following content:
-Nginx
+
+**Nginx Configuration**
+- Create a file named nginx.conf with the following content:
+
 server {
+
     listen 80;
-    server_name site1.londeka.projectcodex.net;
+    
+    server_name site1.Domain;
     location / {
-        proxy_pass http://127.0.0.1:8081;
+        proxy_pass http://IP:8081;
         include proxy_params;
     }
 }
@@ -75,31 +95,40 @@ server {
     ssl_certificate /path/to/ssl/cert.crt;
     ssl_certificate_key /path/to/ssl/cert.key;
     location / {
-        proxy_pass http://127.0.0.1:8081;
+        proxy_pass https://IP:8081;
         include proxy_params;
     }
 }
 
 server {
     listen 80;
-    server_name site2.londeka.projectcodex.net;
+    server_name site2.Domain;
     location / {
-        proxy_pass http://127.0.0.1:8082;
+        proxy_pass http://IP:8082;
         include proxy_params;
     }
 }
 
 server {
+
     listen 443 ssl;
+    
     server_name site2.londeka.projectcodex.net;
+    
     ssl_certificate /path/to/ssl/cert.crt;
+    
     ssl_certificate_key /path/to/ssl/cert.key;
+    
     location / {
-        proxy_pass http://127.0.0.1:8082;
+    
+        proxy_pass https://IP:8082;
+        
         include proxy_params;
+        
     }
 }
-Troubleshooting
-Check PM2 logs: pm2 logs
-Check Nginx logs: sudo nginx -t
-Verify port availability: netstat -tlnp | grep 8081 or grep 8082
+
+### Troubleshooting
+- Check PM2 logs: pm2 logs
+- Check Nginx logs: sudo nginx -t
+- Verify port availability: netstat -tlnp | grep 8081 or grep 8082
